@@ -7,37 +7,34 @@ const int LEN = 1000002;
 struct proc {
   string name;
   int time;
+
+  proc(string name, int time) {
+    this->name = name;
+    this->time = time;
+  }
 };
 
-int head, tail;
-proc Q[LEN];
-
-void enqueue(proc x) {
-  Q[tail] = x;
-  tail = (tail + 1) % LEN;
-}
-
-proc dequeue() {
-  proc x = Q[head];
-  head = (head + 1) % LEN;
-  return x;
-}
-
 int main() {
+  queue<proc> Q;
   int n, q;
   cin >> n >> q;
-  rep(i, n) cin >> Q[i].name >> Q[i].time;
+  string name;
+  int time;
+  rep(i, n) {
+    cin >> name >> time;
+    Q.push(proc(name, time));
+  }
 
-  tail = n;
   int elaps = 0;
-  while (head != tail) {
-    proc p = dequeue();
+  while (!Q.empty()) {
+    proc p = Q.front();
+    Q.pop();
     int t = min(p.time, q);
     p.time -= t;
     elaps += t;
 
     if (p.time > 0) {
-      enqueue(p);
+      Q.push(p);
     } else {
       cout << p.name << " " << elaps << endl;
     }
