@@ -4,18 +4,7 @@ using namespace std;
 int top;
 int S[1000];
 
-void push(int x) {
-  S[++top] = x;
-}
-
-int pop() {
-  top--;
-  return S[top + 1];
-}
-
-int calc(string o) {
-  int a = pop();
-  int b = pop();
+int calc(string o, int a, int b) {
   if (o == "+") {
     return a + b;
   } else if (o == "-") {
@@ -26,16 +15,21 @@ int calc(string o) {
 }
 
 int main() {
+  stack<int> S;
   string s;
   while (cin >> s) {
     if (s == "+" || s == "-" || s == "*") {
-      push(calc(s));
+      int a = S.top();
+      S.pop();
+      int b = S.top();
+      S.pop();
+      S.push(calc(s, a, b));
     } else {
-      push(atoi(s.c_str()));
+      S.push(atoi(s.c_str()));
     }
   }
 
-  cout << pop() << endl;
+  cout << S.top() << endl;
 
   return 0;
 }
