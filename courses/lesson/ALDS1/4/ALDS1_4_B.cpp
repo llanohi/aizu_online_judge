@@ -3,20 +3,22 @@
 using namespace std;
 typedef vector<int> vi;
 
+int solve(int val, int key) {
+  return val <= key;
+}
+
 bool binarySearch(vi A, int key) {
-  int left = -1;
-  int right = A.size();
-  while (right - left > 1) {
-    int mid = (right + left) / 2;
-    if (A[mid] == key) {
-      return true;
-    } else if (A[mid] < key) {
-      left = mid;
+  int ok = -1;
+  int ng = A.size();
+  while (abs(ng - ok) > 1) {
+    int mid = (ng + ok) / 2;
+    if (solve(A[mid], key)) {
+      ok = mid;
     } else {
-      right = mid;
+      ng = mid;
     }
   }
-  return false;
+  return A[ok] == key;
 }
 
 int main() {
