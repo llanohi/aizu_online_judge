@@ -3,24 +3,6 @@
 using namespace std;
 typedef vector<int> vi;
 
-int solve(int val, int key) {
-  return val <= key;
-}
-
-bool binarySearch(vi A, int key) {
-  int ok = -1;
-  int ng = A.size();
-  while (abs(ng - ok) > 1) {
-    int mid = (ng + ok) / 2;
-    if (solve(A[mid], key)) {
-      ok = mid;
-    } else {
-      ng = mid;
-    }
-  }
-  return A[ok] == key;
-}
-
 int main() {
   int n;
   cin >> n;
@@ -33,7 +15,7 @@ int main() {
 
   int ans = 0;
   rep(i, q) {
-    if (binarySearch(S, T[i])) {
+    if (*lower_bound(S.begin(), S.end(), T[i]) == T[i]) {
       ans++;
     }
   }
